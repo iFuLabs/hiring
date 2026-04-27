@@ -13,11 +13,11 @@ export async function startAssessment(candidateInfo) {
   return res.json();
 }
 
-export async function submitAssessment(sessionId, answers, monitoring) {
+export async function submitAssessment(sessionToken, answers, monitoring) {
   const res = await fetch(`${API_BASE}/submit`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ sessionId, answers, monitoring })
+    body: JSON.stringify({ sessionToken, answers, monitoring })
   });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));

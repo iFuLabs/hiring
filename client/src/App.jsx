@@ -29,7 +29,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   // Session data from backend
-  const [sessionId, setSessionId] = useState(null);
+  const [sessionToken, setSessionToken] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [initialTimeMs, setInitialTimeMs] = useState(30 * 60 * 1000);
 
@@ -60,18 +60,11 @@ export default function App() {
     setError(null);
     try {
       const data = await startAssessment(form);
-      setSessionId(data.sessionId);
+      setSessionToken(data.sessionToken);
       setQuestions(data.questions);
       setInitialTimeMs(data.remainingTimeMs);
       setCandidate(form);
-
-      if (data.resumed) {
-        // Resuming an existing session — skip consent, go straight to test
-        setPhase("test");
-        // Timer will start with the remaining time via useEffect below
-      } else {
-        setPhase("consent");
-      }
+      setPhase("consent");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -149,15 +142,10 @@ export default function App() {
         fullscreenExits: antiCheat.fullscreenExits,
       };
 
-      const data = await submitAssessment(sessionId, answers, monitoring);
+      const data = await submitAssessment(sessionToken, answers, monitoring);
 
-      if (data.alreadySubmitted) {
-        setResult(data.result);
-        setTiming(data.timing);
-      } else {
-        setResult(data.result);
-        setTiming({ ...data.timing, timedOut });
-      }
+      setResult(data.result);
+      setTiming({ ...data.timing, timedOut });
 
       webcam.stopCamera();
       setPhase("results");
