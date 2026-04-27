@@ -4,9 +4,19 @@
   "description": "Assessment portal for iFu Labs hiring process",
   "private": true,
   "scripts": {
-    "install:all": "npm install && cd client && npm install",
+    "install:all": "cd server && npm install && cd ../client && npm install",
     "dev:server": "cd server && node index.js",
     "dev:client": "cd client && npm run dev",
-    "build:client": "cd client && npm run build"
+    "build": "cd client && npm install && npm run build"
+  },
+  "dependencies": {
+    "cors": "2.8.5",
+    "dotenv": "16.4.7",
+    "express": "4.21.2",
+    "express-rate-limit": "7.5.0",
+    "helmet": "8.0.0",
+    "jsonwebtoken": "9.0.2",
+    "resend": "4.1.2",
+    "uuid": "11.0.5"
   }
 }

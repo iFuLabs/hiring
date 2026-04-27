@@ -1,5 +1,6 @@
 {
   "buildCommand": "cd client && npm install && npm run build",
+  "installCommand": "npm install",
   "outputDirectory": "client/dist",
   "framework": null,
   "rewrites": [
@@ -7,6 +8,7 @@
   ],
   "functions": {
     "api/index.js": {
+      "includeFiles": "server/**",
       "memory": 256,
       "maxDuration": 30
     }
