@@ -76,6 +76,23 @@ export default function ResultsScreen({ result, timing }) {
           by the hiring team.
         </p>
       </div>
+
+      <button
+        className="btn btn-primary btn-block btn-lg"
+        style={{ marginTop: 24 }}
+        onClick={() => {
+          if (document.fullscreenElement) {
+            document.exitFullscreen().catch(() => {});
+          }
+          window.close();
+          // If window.close() doesn't work (not opened by script), redirect
+          setTimeout(() => {
+            window.location.href = "https://ifulabs.com";
+          }, 300);
+        }}
+      >
+        Close Assessment
+      </button>
     </div>
   );
 }

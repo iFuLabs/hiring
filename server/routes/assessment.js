@@ -113,10 +113,12 @@ router.post("/submit", async (req, res) => {
       status: timedOut ? "timed_out" : "submitted"
     };
 
-    // Send emails (non-blocking)
-    sendResultsEmail(submission).catch(err =>
-      console.error("Email send failed:", err)
-    );
+    // Send emails — MUST await on serverless (Vercel kills the function after response)
+    try {
+      await sendResultsEmail(submission);
+    } catch (err) {
+      console.error("Email send failed:", err);
+    }
 
     res.json({
       result: {
