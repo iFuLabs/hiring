@@ -1,0 +1,31 @@
+/* App-specific overrides and additions */
+
+/* Ensure timer bar has relative positioning for the progress bar */
+.timer-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* Submit confirmation animation */
+.loading-spinner p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+/* Smooth transitions between phases */
+.card,
+.question-card {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

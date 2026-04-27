@@ -1,0 +1,12 @@
+{
+  "name": "ifu-labs-assessment-portal",
+  "version": "1.0.0",
+  "description": "Assessment portal for iFu Labs hiring process",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install && cd client && npm install",
+    "dev:server": "cd server && node index.js",
+    "dev:client": "cd client && npm run dev",
+    "build:client": "cd client && npm run build"
+  }
+}
