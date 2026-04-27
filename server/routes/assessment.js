@@ -108,7 +108,8 @@ router.post("/submit", async (req, res) => {
       monitoring: {
         cameraAllowed: monitoring?.cameraAllowed || false,
         tabSwitchCount: monitoring?.tabSwitchCount || 0,
-        fullscreenExits: monitoring?.fullscreenExits || 0
+        fullscreenExits: monitoring?.fullscreenExits || 0,
+        screenshot: monitoring?.screenshot || null
       },
       status: timedOut ? "timed_out" : "submitted"
     };
@@ -121,12 +122,7 @@ router.post("/submit", async (req, res) => {
     }
 
     res.json({
-      result: {
-        score: result.score,
-        totalQuestions: result.totalQuestions,
-        percentage: result.percentage,
-        band: result.band
-      },
+      submitted: true,
       timing: {
         timeTakenSeconds,
         timedOut

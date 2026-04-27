@@ -4,6 +4,7 @@ export function useWebcam() {
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState(null);
   const streamRef = useRef(null);
+  const videoElRef = useRef(null);
 
   const startCamera = useCallback(async () => {
     try {
@@ -30,11 +31,30 @@ export function useWebcam() {
     setIsActive(false);
   }, []);
 
+  /** Capture a single frame from the webcam as a base64 JPEG */
+  const captureScreenshot = useCallback(() => {
+    const video = videoElRef.current;
+    if (!video || !streamRef.current) return null;
+
+    try {
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth || 320;
+      canvas.height = video.videoHeight || 240;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      return canvas.toDataURL("image/jpeg", 0.7);
+    } catch {
+      return null;
+    }
+  }, []);
+
   return {
     isActive,
     error,
     streamRef,
+    videoElRef,
     startCamera,
-    stopCamera
+    stopCamera,
+    captureScreenshot
   };
 }

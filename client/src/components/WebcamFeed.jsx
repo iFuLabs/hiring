@@ -1,16 +1,19 @@
 import { useCallback } from "react";
 
-export default function WebcamFeed({ streamRef, isActive }) {
+export default function WebcamFeed({ streamRef, videoElRef, isActive }) {
   if (!isActive) return null;
 
-  // Callback ref: assigns the stream as soon as the <video> element mounts
   const setVideoRef = useCallback(
     (video) => {
       if (video && streamRef.current) {
         video.srcObject = streamRef.current;
       }
+      // Store reference for screenshot capture
+      if (videoElRef) {
+        videoElRef.current = video;
+      }
     },
-    [streamRef]
+    [streamRef, videoElRef]
   );
 
   return (

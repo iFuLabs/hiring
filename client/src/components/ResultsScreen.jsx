@@ -1,61 +1,12 @@
-export default function ResultsScreen({ result, timing }) {
-  if (!result) return null;
-
-  const { score, totalQuestions, percentage, band } = result;
-  const { timeTakenSeconds, timedOut } = timing;
-
-  const bandClass =
-    band === "Strong"
-      ? "strong"
-      : band.includes("Average") || band.includes("متوسط")
-        ? "average"
-        : "weak";
-
-  const minutes = Math.floor(timeTakenSeconds / 60);
-  const seconds = timeTakenSeconds % 60;
-  const timeFormatted = `${minutes}m ${seconds}s`;
-
+export default function ResultsScreen() {
   return (
     <div className="card results-container">
-      <h2 style={{ marginBottom: 4 }}>Assessment Complete</h2>
-      <p style={{ color: "var(--text-light)" }}>
+      <div style={{ fontSize: "4rem", marginBottom: 16 }}>✅</div>
+      <h2 style={{ marginBottom: 8 }}>Assessment Submitted</h2>
+      <p style={{ color: "var(--text-light)", maxWidth: 460, margin: "0 auto", lineHeight: 1.7 }}>
         Thank you for completing the iFu Labs Cloud Engineer Assessment.
+        Your responses have been recorded and sent to our hiring team for review.
       </p>
-
-      <div className={`score-circle ${bandClass}`}>
-        <div className="score-value">
-          {score}/{totalQuestions}
-        </div>
-        <div className="score-percentage">{percentage}%</div>
-      </div>
-
-      <div className="score-band">
-        {band === "Strong" && "🟢 "}
-        {(band.includes("Average") || band.includes("متوسط")) && "🟡 "}
-        {(band.includes("Weak") || band.includes("ضعيف")) && "🔴 "}
-        {band}
-      </div>
-
-      <div className="result-details">
-        <div className="result-detail-card">
-          <div className="label">Time Taken</div>
-          <div className="value">{timeFormatted}</div>
-        </div>
-        <div className="result-detail-card">
-          <div className="label">Status</div>
-          <div className="value">{timedOut ? "⏰ Timed Out" : "✅ Submitted"}</div>
-        </div>
-        <div className="result-detail-card">
-          <div className="label">Correct Answers</div>
-          <div className="value">
-            {score} out of {totalQuestions}
-          </div>
-        </div>
-        <div className="result-detail-card">
-          <div className="label">Performance</div>
-          <div className="value">{band}</div>
-        </div>
-      </div>
 
       <div
         style={{
@@ -65,17 +16,31 @@ export default function ResultsScreen({ result, timing }) {
           borderRadius: 8,
           fontSize: "0.9rem",
           color: "var(--text-light)",
+          textAlign: "left",
+          maxWidth: 460,
+          marginLeft: "auto",
+          marginRight: "auto",
         }}
       >
-        <p>
-          Your results have been sent to the iFu Labs hiring team. You will be
-          contacted if you advance to the next stage.
+        <p style={{ fontWeight: 600, color: "var(--text)", marginBottom: 8 }}>
+          What happens next?
         </p>
-        <p style={{ marginTop: 8 }}>
-          <strong>Note:</strong> Do not retake this assessment unless instructed
-          by the hiring team.
-        </p>
+        <ul style={{ paddingLeft: 18, lineHeight: 1.8, margin: 0 }}>
+          <li>Our team will review your assessment</li>
+          <li>You will receive your results via email</li>
+          <li>Shortlisted candidates will be contacted within 5 business days</li>
+        </ul>
       </div>
+
+      <p
+        style={{
+          marginTop: 24,
+          fontSize: "0.85rem",
+          color: "var(--text-light)",
+        }}
+      >
+        Do not retake this assessment unless instructed by the hiring team.
+      </p>
 
       <button
         className="btn btn-primary btn-block btn-lg"
@@ -85,7 +50,6 @@ export default function ResultsScreen({ result, timing }) {
             document.exitFullscreen().catch(() => {});
           }
           window.close();
-          // If window.close() doesn't work (not opened by script), redirect
           setTimeout(() => {
             window.location.href = "https://ifulabs.com";
           }, 300);

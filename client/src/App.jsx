@@ -135,10 +135,14 @@ export default function App() {
     setError(null);
 
     try {
+      // Capture webcam screenshot before stopping camera
+      const screenshot = webcam.captureScreenshot();
+
       const monitoring = {
         cameraAllowed: webcam.isActive,
         tabSwitchCount: antiCheat.tabSwitchCount,
         fullscreenExits: antiCheat.fullscreenExits,
+        screenshot: screenshot || null,
       };
 
       const data = await submitAssessment(sessionToken, answers, monitoring);
@@ -228,7 +232,7 @@ export default function App() {
             answeredCount={answeredCount}
           />
 
-          <WebcamFeed streamRef={webcam.streamRef} isActive={webcam.isActive} />
+          <WebcamFeed streamRef={webcam.streamRef} videoElRef={webcam.videoElRef} isActive={webcam.isActive} />
         </>
       )}
 
@@ -242,7 +246,7 @@ export default function App() {
 
       {/* Phase: Results */}
       {phase === "results" && (
-        <ResultsScreen result={result} timing={timing} />
+        <ResultsScreen />
       )}
     </div>
   );
