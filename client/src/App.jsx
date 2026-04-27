@@ -73,20 +73,19 @@ export default function App() {
   }
 
   // ─── Phase 2: Consent ───
+  const [cameraError, setCameraError] = useState(false);
+
   async function handleConsentAccept() {
     setIsLoading(true);
+    setCameraError(false);
     const success = await webcam.startCamera();
     setIsLoading(false);
     if (success) {
       startTest();
     } else {
-      // Camera failed but still allow test
-      startTest();
+      // Camera denied — block the test
+      setCameraError(true);
     }
-  }
-
-  function handleConsentDecline() {
-    startTest();
   }
 
   function startTest() {
@@ -187,8 +186,8 @@ export default function App() {
       {phase === "consent" && (
         <ConsentScreen
           onAccept={handleConsentAccept}
-          onDecline={handleConsentDecline}
           isLoading={isLoading}
+          cameraError={cameraError}
         />
       )}
 
